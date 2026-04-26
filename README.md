@@ -13,7 +13,7 @@ GSXPD es una aplicación web diseñada para:
 Gestionar expedientes digitales relacionados con riesgos operativos ferroviarios.
 
 
-Registrar, consultar, actualizar y evaluar expedientes según el Reglamento (UE) 402/2013.
+Registrar, consultar el almacenamiento de expedientes según el Reglamento (UE) 402/2013.
 
 Administrar usuarios, roles y permisos mediante autenticación JWT.
 
