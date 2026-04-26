@@ -1,0 +1,390 @@
+<!--
+    ---------------------------------------------------------------
+    Archivo:        expedientes-form.component.html
+    Descripción:    Plantilla HTML del formulario para la creación y edición de Expedientes de Riesgos. Organiza la
+                    información en bloques temáticos (EER, Unidad Organizativa, Titularidad, Definición del Sistema,
+                    Significatividad, FGC, IPA y Evaluador AsBo), utilizando Reactive Forms con validaciones, selectores dinámicos y carga de archivos.
+    Autor:          Eugenio Blanco Fernández
+    Universidad:    Universitat Oberta de Catalunya (UOC)
+    Título Máster:  Máster Universitario en Desarrollo de sitios y
+                    aplicaciones Web
+    Proyecto:       TFM - Sistema de Gestión de Expedientes Digitales (GSXPD)
+    Fecha creación: 07/03/2026
+    Última modif.:  10/04/2026
+
+    Detalles:
+      - Incluye el componente reutilizable <app-boton-volver> para regresar al área de Configuración.
+      - Implementa Reactive Forms con validaciones por campo y mensajes de error contextuales.
+      - Permite filtrar expertos (EER) mediante un campo de búsqueda y seleccionar múltiples valores.
+      - Utiliza selectores dinámicos para Unidad Organizativa, Titularidad, Tipo de Cambio, Significatividad y Evaluador AsBo.
+      - Organiza el formulario en bloques temáticos:
+          * Bloque 1: Datos generales del expediente.
+          * Bloque 2: Extracto / Definición del Sistema (DS).
+          * Bloque 3: Significatividad del cambio.
+          * Bloque 4: Ficha de Gestión Compartida (FGC).
+          * Bloque 5: Informe Pruebas Aplicación (IPA).
+          * Bloque 6: Evaluador de Seguridad (AsBo).
+      - Incluye campos de fecha, checkboxes y carga de archivos.
+      - Presenta botones de acción para guardar o cancelar la operación.
+    ---------------------------------------------------------------
+-->
+
+<p>expedientes-form works!</p>
+<!--
+<app-boton-volver ruta="/configuracion"></app-boton-volver>
+-->
+<button type="button" (click)="volver_panel()">&larr; Volver al panel</button>
+
+<h2>{{ editando ? 'Editar Expediente de Riesgos' : 'Crear Nuevo Expediente de Riesgos' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="guardar()" class="tabla-cuadricula">
+    <!-- Bloque 1 - General -->
+    <div class="form-item">
+        <label for="experto">Nombre del Experto Evaluación Riesgos (EER) </label>
+        <!--
+        <select id="experto" formControlName="expedienteNombreEER" class="form-control">
+            <option value="">Seleccione un (EER)</option>
+            @for (p of expertos; track p.id) {
+            <option [value]="p.id">
+                {{ p.nombre_EER }} {{ p.apellidos_EER }}
+            </option>
+            }
+        </select>
+    -->
+        <input type="text" class="form-control mb-2" placeholder="Buscar experto..." (input)="filtrarExpertos($event)">
+        <select id="experto" formControlName="expedienteNombreEER" class="form-control" multiple>
+            @for (p of expertosFiltrados; track p.id) {
+            <option [value]="p.id">
+                {{ p.nombre_EER }} {{ p.apellidos_EER }}
+            </option>
+            }
+        </select>
+        @if (form.get('expedienteNombreEER')?.invalid && form.get('expedienteNombreEER')?.touched) {
+        <small class="error"> El nombre del (EER) es obligatorio</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label for="unidadorganizativas">Seleccione DG / Subd. / G. Área / J. Área / del Experto Evaluación Riesgos (EER) </label>
+        <select id="unidadorganizativas" formControlName="expedienteNombreDG" class="form-control">            
+            <option value="">Seleccione Unidad Organizativa</option>
+            @for (p of unidadorganizativa; track p.id) {
+            <option [value]="p.id">
+                {{ p.nombre_UnidadOrganizativa }}
+            </option>
+            }
+        </select>
+        @if (form.get('expedienteNombreDG')?.invalid && form.get('expedienteNombreDG')?.touched) {
+        <small class="error"> El nombre de la Unidad-Organizativa es obligatorio</small>
+        }
+    </div>
+    
+    <div class="form-item">
+        <label for="titular">Seleccione la Titularidad de la línea (RFIG) </label>
+        <select id="titular" formControlName="expedienteNombreTitular" class="form-control">
+            <option value="">Seleccione Titularidad línea</option>
+            @for (t of titularidad; track t.id) {
+            <option [value]="t.id">
+                {{ t.nombre_Titularidad }}
+            </option>
+            }
+        </select>
+        @if (form.get('expedienteNombreTitular')?.invalid && form.get('expedienteNombreTitular')?.touched) {
+        <small class="error"> Definir la Titularidad de la línea es obligatorio</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Nombre de la Actuación Global (AG) </label>
+        <input formControlName="expedienteNombreActuacion" />
+        @if (form.get('expedienteNombreActuacion')?.invalid && form.get('expedienteNombreActuacion')?.touched) {
+        <small class="error"> Nombre de la (AG) es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Nombre de la Subactuación Global (SAG) </label>
+        <input formControlName="expedienteNombreSubactuacion" />
+        @if (form.get('expedienteNombreSubactuacion')?.invalid && form.get('expedienteNombreSubactuacion')?.touched) {
+        <small class="error"> Nombre de la (SAG) es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Nombre de la Actuación Particular (AP) </label>
+        <input formControlName="expedienteNombreActuacionParticular" />
+        @if (form.get('expedienteNombreActuacionParticular')?.invalid && form.get('expedienteNombreActuacionParticular')?.touched) {
+        <small class="error"> Nombre de la (AP) es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Nombre de la carpeta del Expediente </label>
+        <input formControlName="expedienteNombreCarpeta" />
+        @if (form.get('expedienteNombreCarpeta')?.invalid && form.get('expedienteNombreCarpeta')?.touched) {
+        <small class="error"> Nombre de la carpeta del Expediente es obligatoria</small>
+        }
+    </div>
+
+    <hr><!-- Bloque 2 - Definición del Sistema (DS) -->
+
+    <div class="form-item">
+        <label>Nombre del Extracto / Definición del Sistema (DS) </label>
+        <input formControlName="expedienteNombreExtracto" />
+        @if (form.get('expedienteNombreExtracto')?.invalid && form.get('expedienteNombreExtracto')?.touched) {
+        <small class="error"> Nombre de la Definición del Sistema (DS) es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Referencia del Extracto / Definición del Sistema (DS) </label>
+        <input formControlName="expedienteNombreReferenciaExtracto" />
+        @if (form.get('expedienteNombreReferenciaExtracto')?.invalid && form.get('expedienteNombreReferenciaExtracto')?.touched) {
+        <small class="error"> Referencia de la Definición del Sistema (DS) es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Versión del Extracto / Definición del Sistema (DS) </label>
+        <input formControlName="expedienteNombreVersionExtracto" />
+        @if (form.get('expedienteNombreVersionExtracto')?.invalid && form.get('expedienteNombreVersionExtracto')?.touched) {
+        <small class="error"> Versión de la Definición del Sistema (DS) es obligatoria</small>
+        }
+    </div>
+<!--
+    <div class="form-item">
+        <label>Envío del Extracto / Definición del Sistema (DS) a EE.FF. </label>
+        <input formControlName="expedienteNombreEnvioExtracto" />
+        @if (form.get('expedienteNombreEnvioExtracto')?.invalid && form.get('expedienteNombreEnvioExtracto')?.touched) {
+        <small class="error"> El campo Envío de la Definición del Sistema (DS) es obligatorio</small>
+        }
+    </div>
+-->
+    <div class="form-item">
+        <label>
+            Envío del Extracto / Definición del Sistema (DS) a EE.FF.  
+            <input type="checkbox" formControlName="expedienteNombreEnvioExtracto" />
+        </label>
+    </div>
+
+    <div class="form-item">
+        <label>Fecha del Extracto / Definición del Sistema (DS) </label>
+        <input type="date" formControlName="expedienteNombreFechaExtracto" />
+        @if (form.get('expedienteNombreFechaExtracto')?.invalid && form.get('expedienteNombreFechaExtracto')?.touched) {
+        <small class="error"> El campo Fecha de la Definición del Sistema (DS) es obligatorio</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Extracto / Definición del Sistema (DS) - (Carga de Archivo) </label>
+        <input formControlName="expedienteNombreArchivoExtracto" />
+        @if (form.get('expedienteNombreArchivoExtracto')?.invalid && form.get('expedienteNombreArchivoExtracto')?.touched) {
+        <small class="error"> El campo Archivo de la Definición del Sistema (DS) es obligatorio</small>
+        }
+    </div>
+
+    <hr><!-- Bloque 3 - Significatividad -->
+
+    <div class="form-item">
+        <label for="cambio">Seleccione el Tipo de cambio </label>
+        <select id="cambio" formControlName="expedienteNombreCambio" class="form-control">
+            <option value="">Seleccione tipo de cambio</option>
+            @for (c of cambio; track c.id) {
+            <option [value]="c.id">
+                {{ c.nombre_Cambio }}
+            </option>
+            }
+        </select>
+        @if (form.get('expedienteNombreCambio')?.invalid && form.get('expedienteNombreCambio')?.touched) {
+        <small class="error"> El Tipo de cambio es obligatorio</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Título del Cambio </label>
+        <input formControlName="expedienteNombreTituloCambio" />
+        @if (form.get('expedienteNombreTituloCambio')?.invalid && form.get('expedienteNombreTituloCambio')?.touched) {
+        <small class="error"> El campo Título del cambio es obligatorio</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label for="cambio">Seleccione la Significatividad de cambio </label>
+        <select id="cambio" formControlName="expedienteNombreSignificativoCambio" class="form-control">
+            <option value="">Seleccione la Significatividad</option>
+            @for (s of significativo; track s.id) {
+            <option [value]="s.id">
+                {{ s.nombre_Significatividad }}
+            </option>
+            }
+        </select>
+        @if (form.get('expedienteNombreSignificativoCambio')?.invalid && form.get('expedienteNombreSignificativoCambio')?.touched) {
+        <small class="error"> La Significatividad del cambio es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Significatividad del Cambio Versión / Revisión (V/Rev.) </label>
+        <input formControlName="expedienteNombreVersionCambio" />
+        @if (form.get('expedienteNombreVersionCambio')?.invalid && form.get('expedienteNombreVersionCambio')?.touched) {
+        <small class="error"> El campo de la Versión de la Significatividad es obligatorio</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Fecha del documento de la Declaración de la Significatividad del cambio </label>
+        <input type="date" formControlName="expedienteNombreFechaCambio" />
+        @if (form.get('expedienteNombreFechaCambio')?.invalid && form.get('expedienteNombreFechaCambio')?.touched) {
+        <small class="error"> El campo Fecha de la Declaración de la Significatividad es obligatorio</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Declaración de la Significatividad del Cambio - (Carga de Archivo) </label>
+        <input formControlName="expedienteNombreArchivoCambio" />
+        @if (form.get('expedienteNombreArchivoCambio')?.invalid && form.get('expedienteNombreArchivoCambio')?.touched) {
+        <small class="error"> La Carga de archivo de la Declaración de la Significatividad es obligatoria</small>
+        }
+    </div>
+
+    <hr><!-- Bloque 4 - Ficha de Gestión Compartida (FGC) -->
+
+    <div class="form-item">
+        <label>Nombre de la Ficha de Gestión Compartida (FGC) </label>
+        <input formControlName="expedienteNombreFicha" />
+        @if (form.get('expedienteNombreFicha')?.invalid && form.get('expedienteNombreFicha')?.touched) {
+        <small class="error"> Nombre de la Ficha de Gestión Compartida es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Fecha de la Ficha de Gestión Compartida (FGC) </label>
+        <input type="date" formControlName="expedienteNombreFechaFicha" />
+        @if (form.get('expedienteNombreFechaFicha')?.invalid && form.get('expedienteNombreFechaFicha')?.touched) {
+        <small class="error"> Fecha de la Ficha de Gestión Compartida es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Versión de la Ficha de Gestión Compartida (FGC) </label>
+        <input formControlName="expedienteNombreVersionFicha" />
+        @if (form.get('expedienteNombreVersionFicha')?.invalid && form.get('expedienteNombreVersionFicha')?.touched) {
+        <small class="error"> Versión de la Ficha de Gestión Compartida es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Ficha de Gestión Compartida (FGC) - (Carga de Archivo) </label>
+        <input formControlName="expedienteNombreArchivoFicha" />
+        @if (form.get('expedienteNombreArchivoFicha')?.invalid && form.get('expedienteNombreArchivoFicha')?.touched) {
+        <small class="error"> La Carga de Archivo de la Ficha de Gestión Compartida es obligatoria</small>
+        }
+    </div>
+
+    <hr><!-- Bloque 5 - Informe Pruebas Aplicación (IPA) -->
+
+    <div class="form-item">
+        <label>Nombre del Informe Pruebas Aplicación (IPA) </label>
+        <input formControlName="expedienteNombreIPA" />
+        @if (form.get('expedienteNombreIPA')?.invalid && form.get('expedienteNombreIPA')?.touched) {
+        <small class="error"> Informe Pruebas Aplicación (IPA) es obligatorio</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Referencia de documento del Informe Pruebas Aplicación (IPA) </label>
+        <input formControlName="expedienteNombreReferenciaIPA" />
+        @if (form.get('expedienteNombreReferenciaIPA')?.invalid && form.get('expedienteNombreReferenciaIPA')?.touched) {
+        <small class="error"> Referencia del Informe Pruebas Aplicación (IPA) es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Versión del Informe Pruebas Aplicación (IPA) </label>
+        <input formControlName="expedienteNombreVersionIPA" />
+        @if (form.get('expedienteNombreVersionIPA')?.invalid && form.get('expedienteNombreVersionIPA')?.touched) {
+        <small class="error"> Versión Informe Pruebas Aplicación (IPA) es obligatorio</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Fecha del Informe Pruebas Aplicación (IPA) </label>
+        <input type="date" formControlName="expedienteNombreFechaIPA" />
+        @if (form.get('expedienteNombreFechaIPA')?.invalid && form.get('expedienteNombreFechaIPA')?.touched) {
+        <small class="error"> Fecha Informe Pruebas Aplicación (IPA) es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Informe Pruebas Aplicación (IPA) - (Carga de Archivo) </label>
+        <input formControlName="expedienteNombreArchivoIPA" />
+        @if (form.get('expedienteNombreArchivoIPA')?.invalid && form.get('expedienteNombreArchivoIPA')?.touched) {
+        <small class="error"> La Carga de Archivo del Informe Pruebas Aplicación (IPA) es obligatoria</small>
+        }
+    </div>
+
+    <hr><!-- bloque 6 - Evaluador AsBo -->
+
+    <div class="form-item">
+        <label for="evaluador">Seleccione el nombre del Evaluador de Seguridad (AsBo) </label>
+        <select id="evaluador" formControlName="expedienteNombreASBOEvaluador" class="form-control">
+            <option value="">Seleccione el (AsBo)</option>
+            @for (a of asbo; track a.id) {
+            <option [value]="a.id">
+                {{ a.nombre_Evaluador }}
+            </option>
+            }
+        </select>
+        @if (form.get('expedienteNombreASBOEvaluador')?.invalid &&
+        form.get('expedienteNombreASBOEvaluador')?.touched) {
+        <small class="error">  Nombre del Evaluador de Seguridad (AsBo) es obligatorio</small>
+        }
+    </div>
+        
+    <div class="form-item">
+        <label>
+            Subcontratación del Evaluador de Seguridad (AsBo)   
+            <input type="checkbox" formControlName="expedienteNombreContrataEvaluador" />
+        </label>
+    </div>
+
+    <div class="form-item">
+        <label>Selecciona FECHA PREVISTA del Evaluador de Seguridad (AsBo) </label>
+        <input type="date" formControlName="expedienteNombrePrevistaEvaluador" />
+        @if (form.get('expedienteNombrePrevistaEvaluador')?.invalid && form.get('expedienteNombrePrevistaEvaluador')?.touched) {
+        <small class="error"> La fecha prevista del Evaluador de Seguridad (AsBo) es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Selecciona FECHA EJECUCIÓN del Evaluador de Seguridad (AsBo) </label>
+        <input type="date" formControlName="expedienteNombreEjecucionEvaluador" />
+        @if (form.get('expedienteNombreEjecucionEvaluador')?.invalid && form.get('expedienteNombreEjecucionEvaluador')?.touched) {
+        <small class="error"> La fecha ejecución del Evaluador de Seguridad (AsBo) es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Versión del Informe del Evaluador de Seguridad (AsBo) </label>
+        <input formControlName="expedienteNombreVersionEvaluador" />
+        @if (form.get('expedienteNombreVersionEvaluador')?.invalid &&
+        form.get('expedienteNombreVersionEvaluador')?.touched) {
+        <small class="error"> La Versión del Informe Evaluador de Seguridad (AsBo) es obligatoria</small>
+        }
+    </div>
+
+    <div class="form-item">
+        <label>Informe del Evaluador de Seguridad (AsBo) - (Carga de Archivo) </label>
+        <input formControlName="expedienteNombreArchivoEvaluador" />
+        @if (form.get('expedienteNombreArchivoEvaluador')?.invalid &&
+        form.get('expedienteNombreArchivoEvaluador')?.touched) {
+        <small class="error"> La carga de Archivo del Informe Evaluador de Seguridad (AsBo) es obligatoria</small>
+        }
+    </div>
+
+    <!-- Botones de acción en formulario -->
+    <div class="botones">
+        <button type="submit" [disabled]="form.invalid">Guardar</button>
+        <button type="button" (click)="volver()">Cancelar</button>
+    </div>
+</form>

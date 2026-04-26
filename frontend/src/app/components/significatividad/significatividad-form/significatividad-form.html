@@ -1,0 +1,40 @@
+<!--
+    ---------------------------------------------------------------
+    Archivo:        significatividad-form.html
+    Descripción:    Plantilla HTML del formulario para la creación y edición de niveles de Significatividad del cambio.
+                    Utiliza Reactive Forms con validaciones y permite gestionar el nombre asociado a cada nivel de
+                    significatividad dentro del sistema GSXPD.
+    Autor:          Eugenio Blanco Fernández
+    Universidad:    Universitat Oberta de Catalunya (UOC)
+    Título Máster:  Máster Universitario en Desarrollo de sitios y
+                    aplicaciones Web
+    Proyecto:       TFM - Sistema de Gestión de Expedientes Digitales (GSXPD)
+    Fecha creación: 07/04/2026
+    Última modif.:  10/04/2026
+
+    Detalles:
+      - Incluye el componente reutilizable <app-boton-volver> para regresar al área de Configuración.
+      - Implementa Reactive Forms con validación del campo obligatorio.
+      - Permite crear o editar un nivel de significatividad según el modo actual (nuevo o edición).
+      - Presenta botones de acción para guardar los cambios o cancelar la operación.
+    ---------------------------------------------------------------
+-->
+<p>significatividad-form works!</p>
+<!--
+<app-boton-volver ruta="/configuracion"></app-boton-volver>
+-->
+<button type="button" (click)="volver_panel()">&larr; Volver al panel</button>
+
+<h2>{{ editando ? 'Editar Significatividad' : 'Insertar Nueva Significatividad del Expediente' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="guardar()">
+
+    <label>Nombre de la significatividad </label>
+    <input formControlName="nombre" />
+    @if (form.get('nombre')?.invalid && form.get('nombre')?.touched) {
+    <small class="error">El nombre de la significatividad es obligatorio</small>
+    }
+
+    <button type="submit" [disabled]="form.invalid">Guardar</button>
+    <button type="button" (click)="volver()">Cancelar</button>
+</form>

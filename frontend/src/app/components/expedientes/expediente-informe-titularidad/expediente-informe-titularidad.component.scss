@@ -1,0 +1,46 @@
+.tabla-cuadricula {
+    width: 100%;
+}
+
+.tabla-cuadricula thead th {
+    background-color: gray;
+    font-weight: bold;
+    text-align: center;
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
+
+html2pdf__container .no-print {
+    display: none !important;
+}
+
+/* Ocultar elementos marcados como no imprimibles */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
+
+/* Imprimir SOLO el contenido del informe */
+@media print {
+    body * {
+        visibility: hidden !important;
+    }
+
+    #informe,
+    #informe * {
+        visibility: visible !important;
+    }
+
+    #informe {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+

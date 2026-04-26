@@ -1,0 +1,27 @@
+<!--
+    ---------------------------------------------------------------
+    Archivo:        app.html
+    Descripción:    Plantilla HTML principal del sistema GSXPD. Actúa como contenedor raíz de la aplicación Angular,
+                    gestionando la visualización del menú de navegación y el enrutado dinámico de vistas mediante
+                    <router-outlet>.
+    Autor:          Eugenio Blanco Fernández
+    Universidad:    Universitat Oberta de Catalunya (UOC)
+    Título Máster:  Máster Universitario en Desarrollo de sitios y
+                    aplicaciones Web
+    Proyecto:       TFM - Sistema de Gestión de Expedientes Digitales (GSXPD)
+    Fecha creación: 07/04/2026
+    Última modif.:  10/04/2026
+
+    Detalles:
+      - Muestra el componente <app-menu> únicamente cuando la variable showNavbar es verdadera (usuario autenticado).
+      - Utiliza <router-outlet> para renderizar dinámicamente las vistas correspondientes a cada ruta del sistema.
+      - Funciona como punto de entrada de toda la arquitectura de componentes, gestionando la estructura visual global.
+    ---------------------------------------------------------------
+-->
+<!-- Muestra el menú solo si showNavbar es true-->
+@if (showNavbar) {
+    <app-menu></app-menu>
+}
+<div class="contenido">
+    <router-outlet></router-outlet><!-- carga aplicación restante -->
+</div>

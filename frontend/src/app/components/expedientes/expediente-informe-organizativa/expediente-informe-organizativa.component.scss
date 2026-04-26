@@ -1,0 +1,19 @@
+.tabla-cuadricula {
+    width: 100%;
+}
+
+.tabla-cuadricula thead th {
+    background-color: gray;
+    font-weight: bold;
+    text-align: center;
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
+
+html2pdf__container .no-print {
+    display: none !important;
+}
