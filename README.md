@@ -1,108 +1,141 @@
-# Repositorio de la aplicación Web "GSXPD"
+# Sistema de Gestión de Expedientes Digitales (GSXPD)
 ## pec3-tfm-gsxpd-eblancofe
-Máster De Desarrollo de sitios y Aplicaciones Web (UOC) - Archivos código fuente en Angular del proyecto TFM, en concreto de la parte de "Backend" y "Frontend" de la aplicación Web llamada "GSXPD" sobre la Gestión de Expedientes Digitales sobre Riesgos operativos ferroviarios. 
 
-Alumno: Eugenio Blanco Fernández.
-
-
-## Descripción general del proyecto
-
-GSXPD es una aplicación web diseñada para:
+Máster Universitario en Desarrollo de Sitios y Aplicaciones Web (UOC)  
+Trabajo Final de Máster (TFM)  
+Autor: **Eugenio Blanco Fernández**
 
 
-Gestionar expedientes digitales relacionados con riesgos operativos ferroviarios.
 
 
-Registrar, consultar el almacenamiento de expedientes según el Reglamento (UE) 402/2013.
 
-Administrar usuarios, roles y permisos mediante autenticación JWT.
+# Sistema de Gestión de Expedientes Digitales (GSXPD)
+## pec3-tfm-gsxpd-eblancofe
 
-Ofrecer una interfaz moderna, accesible y responsive basada en Angular Material.
+Máster Universitario en Desarrollo de Sitios y Aplicaciones Web (UOC)  
+Trabajo Final de Máster (TFM)  
+Alumno: **Eugenio Blanco Fernández**
 
-Se ha desarrollado dentro de Angular v21, se han dividido en 2 directorios, uno de ellos correspondiente a la parte del "Backend" de la aplicación. Otro, además también correspondiente a la parte del "Frontend" de la aplicación Web.
+Archivos código fuente en Angular del proyecto TFM, en concreto de la parte de "Backend" y "Frontend" de la aplicación Web llamada "GSXPD" sobre la Gestión de Expedientes Digitales sobre Riesgos operativos ferroviarios. 
+
+---
+
+## 📌 Descripción general del proyecto
+
+**GSXPD** es una aplicación web completa (frontend + backend) diseñada para la **gestión de expedientes digitales** relacionados con **riesgos operativos ferroviarios**, siguiendo el **Reglamento (UE) 402/2013**.
+
+El sistema permite:
+
+- Registrar, consultar y gestionar expedientes digitales.
+- Administrar usuarios, roles y permisos mediante autenticación JWT.
+- Generar informes anuales, por titularidad y por unidades organizativas.
+- Ofrecer una interfaz moderna, accesible y responsive basada en **Angular Material (M3)**.
+- Integrar un backend robusto desarrollado con **NestJS + PostgreSQL**.
+
+La aplicación está dividida en dos partes:
+
+- **Backend** → API REST desarrollada con NestJS  
+- **Frontend** → Aplicación web desarrollada con Angular 21
+
+Ambas partes se incluyen en este repositorio como **submódulos Git**.
+
+---
+
+## 📁 Estructura del repositorio
 
 
-La aplicación está dividida en dos partes claramente diferenciadas:
+pec3-tfm-gsxpd-eblancofe/
+│
+├── backend/   → Submódulo: https://github.com/eblancofe/gsxpd-backend
+├── frontend/  → Submódulo: https://github.com/eblancofe/gsxpd-frontend
+│
+├── README.md
 
 
-Backend – API REST desarrollada con NestJS, TypeScript, TypeORM y PostgreSQL.
 
+---
 
-Frontend – Aplicación web desarrollada con Angular 21, Angular Material y componentes standalone.
+## 🛠️ Tecnologías utilizadas
 
+### 🔹 Backend (API REST)
+- NestJS (Node.js + TypeScript)
+- TypeORM
+- PostgreSQL
+- JWT (Json Web Tokens)
+- Bcrypt (hashing de contraseñas)
 
-## Tecnologías utilizadas
-## Backend
-NestJS (Node.js + TypeScript)
+### 🔹 Frontend (Aplicación Web)
+- Angular 21
+- Angular Material (Material Design 3)
+- Standalone Components
+- RxJS
+- SCSS
 
-TypeORM
+---
 
-PostgreSQL
-
-JWT (Json Web Tokens)
-
-Bcrypt para hashing de contraseñas
-
-## Frontend
-Angular 21
-
-Angular Material (M3)
-
-Standalone Components
-
-RxJS
-
-SCSS
-
+## ▶️ Ejecución del proyecto en local
 
 ## Ejecución del proyecto
 ## 1. Backend
 
+```bash
 cd backend
 
 npm install
 
 npm run start:dev
-
+```
 
 ## 2. Frontend
 
+```bash
 cd frontend
 
 npm install
 
 npm run start
-
+```
 
 Dentro de nuestro navegador Web, insertamos la dirección URL = http://localhost:4200
 
+---
 
+## 🔐 Autenticación y roles
 
-## Autenticación y roles
+El sistema implementa autenticación mediante **JWT** y control de acceso basado en roles.
 
-El sistema implementa autenticación mediante JWT y control de acceso basado en roles:
+Roles disponibles:
 
-
-admin
-
-
-eer
-
-
-lectura
-
-
-secretaria
-
+- **admin**
+- **eer**
+- **secretaria**
+- **lectura**
 
 Los endpoints protegidos requieren:
 
+- `JwtAuthGuard`
+- `RolesGuard`
 
-JwtAuthGuard
+---
+
+## 🗄️ Base de datos
+
+El sistema utiliza **PostgreSQL** como motor de base de datos.
 
 
-RolesGuard
+---
 
-## Base de datos
+## 🌐 Despliegue
 
-El sistema utiliza PostgreSQL.
+- **Frontend** desplegado en Vercel  
+- **Backend** desplegado en Render 
+- **Base de datos** alojada en Neon (PostgreSQL serverless)
+
+---
+
+## 👤 Autor
+
+**Eugenio Blanco Fernández**  
+Máster Universitario en Desarrollo de Sitios y Aplicaciones Web  
+Universitat Oberta de Catalunya (UOC)
+
