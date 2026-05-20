@@ -3,17 +3,6 @@
 
 Máster Universitario en Desarrollo de Sitios y Aplicaciones Web (UOC)  
 Trabajo Final de Máster (TFM)  
-Autor: **Eugenio Blanco Fernández**
-
-
-
-
-
-# Sistema de Gestión de Expedientes Digitales (GSXPD)
-## pec3-tfm-gsxpd-eblancofe
-
-Máster Universitario en Desarrollo de Sitios y Aplicaciones Web (UOC)  
-Trabajo Final de Máster (TFM)  
 Alumno: **Eugenio Blanco Fernández**
 
 Archivos código fuente en Angular del proyecto TFM, en concreto de la parte de "Backend" y "Frontend" de la aplicación Web llamada "GSXPD" sobre la Gestión de Expedientes Digitales sobre Riesgos operativos ferroviarios. 
@@ -43,14 +32,14 @@ Ambas partes se incluyen en este repositorio como **submódulos Git**.
 
 ## 📁 Estructura del repositorio
 
-
+```text
 pec3-tfm-gsxpd-eblancofe/
 │
 ├── backend/   → Submódulo: https://github.com/eblancofe/gsxpd-backend
 ├── frontend/  → Submódulo: https://github.com/eblancofe/gsxpd-frontend
 │
 ├── README.md
-
+```
 
 
 ---
