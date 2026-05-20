@@ -32,15 +32,14 @@ Ambas partes se incluyen en este repositorio como **submódulos Git**.
 
 ## 📁 Estructura del repositorio
 
-```text
-pec3-tfm-gsxpd-eblancofe/
-│
-├── backend/   → Submódulo: https://github.com/eblancofe/gsxpd-backend
-├── frontend/  → Submódulo: https://github.com/eblancofe/gsxpd-frontend
-│
-├── README.md
-```
 
+pec3-tfm-gsxpd-eblancofe/   
+│   
+├── backend/   → Submódulo: https://github.com/eblancofe/gsxpd-backend   
+├── frontend/  → Submódulo: https://github.com/eblancofe/gsxpd-frontend   
+│   
+├── README.md   
+   
 
 ---
 
