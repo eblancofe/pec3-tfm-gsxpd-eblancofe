@@ -121,6 +121,24 @@ El sistema utiliza **PostgreSQL** como motor de base de datos.
 
 ---
 
+## 📦 Repositorios del proyecto
+El proyecto "GSXPD" está compuesto por tres repositorios GitHub:
+
+Repositorio principal (TFM)  
+Contiene la documentación, estructura general y los submódulos.
+👉 https://github.com/eblancofe/pec3-tfm-gsxpd-eblancofe
+
+Backend (API REST – NestJS)  
+Submódulo del repositorio principal.
+👉 https://github.com/eblancofe/gsxpd-backend
+
+Frontend (Angular 21 + Material 3)  
+Submódulo del repositorio principal.
+👉 https://github.com/eblancofe/gsxpd-frontend
+
+
+---
+
 ## 👤 Autor
 
 **Eugenio Blanco Fernández**  
